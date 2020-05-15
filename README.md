@@ -72,17 +72,15 @@ To use `Goodreads` api, https://www.goodreads.com/api, one needs to register and
 The content of `books.csv` file was uploaded to heroku using packages `os`, `csv`, 
 `SQLalchemy` and `SQLaclhemy.orm`. In python file `import.py`use the SQL command:
 
-'''
-
+'
         INSERT INTO books (book_isbn, book_title, book_author, book_year) VALUES 
-                   (:book_isbn, :book_title, :book_author, :book_year)
-                   
-'''
+                   (:book_isbn, :book_title, :book_author, :book_year)                  
+'
 
 where `:book_isbn`, `:book_title`, `:book_author` and `:book_year` are individual attributes for the single book item 
 in `books.csv` file.
  
-# 3.0 Wesbite Organization and File Structure
+# 3.0 Website Organization and File Structure
 The program `application.py` is used to provide WSGI (Web Server Gateway Interface) using Flask. The  
 functionality for different URLs is provided using `@app.route` decorators and associated functions.
 
