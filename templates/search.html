@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book Review
+{% endblock %}
+
+{% block body %}
+    <h2>"Book Review" - Project 1</h2>
+    <h2> </h2>
+    {% set ns_ISBN = namespace(selected=false) %}
+    {% set ns_Author = namespace(selected=true) %}
+    {% set ns_Title = namespace(selected=false) %}
+
+    {% if default_search == 'ISBN' %}
+        {% set ns_ISBN.selected=true%}
+        {% set ns_Author.selected=false%}
+        {% set ns_Title.selected=false%}
+    {% endif %}
+
+    {% if default_search == 'Author' %}
+        {% set ns_ISBN.selected=false%}
+        {% set ns_Author.selected=true%}
+        {% set ns_Title.selected=false%}
+    {% endif %}
+
+    {% if default_search == 'Title' %}
+        {% set ns_ISBN.selected=false%}
+        {% set ns_Author.selected=false%}
+        {% set ns_Title.selected=true%}
+    {% endif %}
+
+    {% if default_string %}
+        {%  set default_search_string=default_string %}
+    {% else %}
+        {% set default_search_string='Enter_Search_String' %}
+    {% endif %}
+
+    <form action="{{ url_for('search') }}" method="post">
+        <h6> Select search type </h6>
+        <select class="custom-select" id="searchType" name="searchType">
+            {% if ns_ISBN.selected %}
+                <option value="ISBN" selected>ISBN</option>
+            {% else %}
+                <option value="ISBN">ISBN</option>
+            {% endif %}
+            {% if ns_Author.selected %}
+                <option value="Author" selected>Author</option>
+            {% else %}
+                <option value="Author">Author</option>
+            {% endif %}
+            {% if ns_Title.selected %}
+                <option value="Title" selected>Title</option>
+            {% else %}
+                <option value="Title">Title</option>
+            {% endif %}
+        </select>
+        <h2></h2>
+        <h6> Search string (no special characters)</h6>
+        <div class="form-group">
+{#            <input class="form-control" name="searchString" placeholder="Enter search string">#}
+            <input class="form-control" name="searchString" placeholder={{ default_search_string }}>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    <h2> </h2>
+    {% if search_results %}
+        <h2>Search Results</h2>
+        {% if message %}
+            <h4> Warning: {{ message }}</h4>
+        {% endif %}
+    {% else %}
+        {% if message %}
+            <h4> Error: {{ message }}</h4>
+        {% endif %}
+    {% endif %}
+
+    <ul>
+        {% for result in search_results %}
+            <li>
+                <a href="{{ url_for('book', book_id=result.book_id) }}">
+                    {{ result.book_author }},  {{ result.book_year }}, {{ result.book_title }},
+                    ISBN= {{  result.book_isbn }}
+                </a>
+            </li>
+        {% else %}
+            <h3> Search results not available, try different search </h3>
+        {% endfor %}
+    </ul>
+
+{##}
+{#        <div class="form-group">#}
+{#            <select class="form-control" name="book_id">#}
+{#                {% for book in books %}#}
+{#                    <option value="{{ book.id }}">{{ book.isbn }}, {{ book.author }},  {{ book.tile }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </div>#}
+{##}
+{#        <div class="form-group">#}
+{#            <input class="form-control" name="name" placeholder="User Name">#}
+{#        </div>#}
+{##}
+{#        <div class="form-group">#}
+{#            <button class="btn btn-primary">Submit Review</button>#}
+{#        </div>#}
+
+    </form>
+{% endblock %}

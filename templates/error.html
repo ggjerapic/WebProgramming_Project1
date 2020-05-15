@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block body %}
+    {% if msg_type == "Warning" %}
+        <h1>Warning</h1>
+    {% else %}
+        <h1>Error</h1>
+    {% endif %}
+
+    {{ message }}
+{% endblock %}

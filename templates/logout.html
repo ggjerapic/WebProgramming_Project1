@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book Review - Logout
+{% endblock %}
+
+{% block body %}
+    <h1> </h1>
+    <h4>"Book Review - Project 1" - Logout</h4>
+    <h1>  </h1> <br>
+
+    <form action="{{ url_for('logout') }}" method="post">
+        <h1>  </h1>
+            <h4> Do you wish to leave your book review session ? </h4>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Yes - Logout </button>
+        </div>
+        <div>
+            <h1>  </h1> <br>
+            <h4>If you wish to continue book reviews, please login again.</h4>
+        </div>
+
+    </form>
+
+{% endblock %}

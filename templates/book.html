@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block body %}
+    <h2>Book Details</h2>
+
+    <ul>
+        <li>Title: {{ book.book_title}} </li>
+        <li>Author: {{ book.book_author }}</li>
+        <li>Year: {{ book.book_year }}</li>
+        <li>ISBN: {{ book.book_isbn}} </li>
+        <li>No. of reviews: {{ goodreads_nRevs }} from Goodreads </li>
+        <li>Avg rating : {{ goodreads_avgRate }} from Goodreads</li>
+    </ul>
+
+    <h1> </h1>
+    <form action="{{ url_for('review', book_id=book.book_id) }}" method="post" >
+        <h4> Enter your review: </h4>
+        <h3>  </h3>
+        <div class="form-group">
+             <label class="col-lg-3 control-label"> Enter Rating ( 1-5 )</label>
+             <div class="col-lg-5">
+                <input class="form-control" type="number" min="1" max="5" name="rev_rate"  placeholder="Enter value from 1 to 5">
+             </div>
+        </div>
+        <h2> </h2>
+        <div class="form-group">
+             <label class="col-lg-3 control-label"> Enter Short Review <br> </label>
+             <div class="col-lg-5">
+                <input class="form-control" type="text" name="rev_txt"  placeholder="Enter short review">
+             </div>
+        </div>
+            <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </div>
+
+    </form>
+    <h1> </h1>
+    <h4>Reviews</h4>
+    </form>
+    <ul>
+    {% for rev_item in rev_items %}
+        <li>
+            User {{ rev_item.usr_name }} gave this book a rating of {{ rev_item.rev_rate }} - "{{ rev_item.rev_txt }}"
+        </li>
+    {% else %}
+        <h4> There are no available reviews for this title.  </h4>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
